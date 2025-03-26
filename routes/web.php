@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CursoController;
+use App\Http\Controllers\TareaUnoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,10 +23,10 @@ Route::get('/hola', function () {
 })->name('hola');
 
 // Ruta de suma de dos números
-Route::get('/sumar', [CursoController::class, 'sumar'])->name('sumar');
+// Route::get('/sumar', [CursoController::class, 'sumar'])->name('sumar');
 
 // Ruta de suma de dos números con parámetros
-Route::get('/suma/{n1}/{n2}', [CursoController::class, 'sumarConParametros'])->where('n1', '[0-9]+')->where('n2', '[0-9]+');
+// Route::get('/suma/{n1}/{n2}', [CursoController::class, 'sumarConParametros'])->where('n1', '[0-9]+')->where('n2', '[0-9]+');
 
 // Ruta de saludo con parámetro opcional
 Route::get('/nombre/{nombre?}', function ($nombre = "Arturo") {
@@ -65,3 +66,28 @@ Route::prefix('admin')->group(function () {
     })->name('segundo');
 });
 
+// ======================================== T A R E A   1   D E L   C U R S O ========================================
+
+// Suma de dos números
+Route::prefix('sumar')->group(function () {
+    Route::get('/con-parametros/{n1}/{n2}', [TareaUnoController::class, 'sumarConParametros'])->where('n1', '[0-9]+')->where('n2', '[0-9]+')->name('sumar.conParametros');
+    Route::get('/sin-parametros', [TareaUnoController::class, 'sumarSinParametros'])->name('sumar.sinParametros');
+});
+
+// Resta de dos números
+Route::prefix('restar')->group(function () {
+    Route::get('/con-parametros/{n1}/{n2}', [TareaUnoController::class, 'restarConParametros'])->where('n1', '[0-9]+')->where('n2', '[0-9]+')->name('restar.conParametros');
+    Route::get('/sin-parametros', [TareaUnoController::class, 'restarSinParametros'])->name('restar.sinParametros');
+});
+
+// Multiplicación de dos números
+Route::prefix('multiplicar')->group(function () {
+    Route::get('/con-parametros/{n1}/{n2}', [TareaUnoController::class, 'multiplicarConParametros'])->where('n1', '[0-9]+')->where('n2', '[0-9]+')->name('multiplicar.conParametros');
+    Route::get('/sin-parametros', [TareaUnoController::class, 'multiplicarSinParametros'])->name('multiplicar.sinParametros');
+});
+
+// División de dos números
+Route::prefix('dividir')->group(function () {
+    Route::get('/con-parametros/{n1}/{n2}', [TareaUnoController::class, 'dividirConParametros'])->where('n1', '[0-9]+')->where('n2', '[0-9]+')->name('dividir.conParametros');
+    Route::get('/sin-parametros', [TareaUnoController::class, 'dividirSinParametros'])->name('dividir.sinParametros');
+});
