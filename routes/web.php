@@ -1,11 +1,12 @@
 <?php
 
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\TareaUnoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-// ======================================== E J E M P L O S   D E L   C U R S O========================================
+// ======================================== E J E M P L O S   D E L   C U R S O:  S E S I Ó N  1========================================
 // Ruta principal con variables obligatorias
 // Route::get('/', function () {
 //     $nombre = "Arturo";
@@ -13,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome', compact('nombre', 'fecha'));
 // })->name('home');
 Route::get('/', function(){
-    return redirect()->route('home', ['nombre' => 'Arturo', 'fecha' => date('d-m-Y')]);
+    return redirect()->route('home2', ['nombre' => 'Arturo', 'fecha' => date('d-m-Y')]);
 })->name('home');
-Route::get('/home/{nombre}/{fecha}', [CursoController::class, 'getName'])->name('home');
+Route::get('/home/{nombre}/{fecha}', [CursoController::class, 'getName'])->name('home2');
 
 // Ruta de Hola Mundo
 Route::get('/hola', function () {
@@ -91,3 +92,23 @@ Route::prefix('dividir')->group(function () {
     Route::get('/con-parametros/{n1}/{n2}', [TareaUnoController::class, 'dividirConParametros'])->where('n1', '[0-9]+')->where('n2', '[0-9]+')->name('dividir.conParametros');
     Route::get('/sin-parametros', [TareaUnoController::class, 'dividirSinParametros'])->name('dividir.sinParametros');
 });
+
+
+// ======================================== E J E M P L O S   D E L   C U R S O:  S E S I Ó N  2 ========================================
+Route::resource('users', AdminUserController::class)
+->names([
+    'create' => 'admin_user.create',
+])
+->parameters([
+    'users' => 'admin_user'
+]);
+
+Route::get('suscribed', function () {
+    return "Bienvenido suscrito";
+})->middleware('suscribed');
+
+Route::get('ejemplo', function () {
+    return view('ejemplo', ['nombre' => 'Arturo']);
+})->name('ejemplo');
+
+Route::get('ejemplo-layout', [CursoController::class, 'ejemploLayoud'])->name('ejemploLayoud');

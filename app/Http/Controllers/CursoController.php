@@ -22,4 +22,21 @@ class CursoController extends Controller
         $suma = $n1 + $n2;
         return "La suma de $n1 + $n2 es: $suma";
     }
+
+    public function ejemploLayoud()
+    {
+        $nombre = "Arturo";
+        $edad = 24;
+
+        // Opcion 1
+        // return view('layout.child', ['nombre' => $nombre, 'edad' => $edad]);
+
+        // Opcion 2
+        // return view('layout.child')
+        // ->with('nombre', $nombre)
+        // ->with('edad', $edad);
+
+        // Opcion 3
+        return view('layout.child', compact('nombre', 'edad'));
+    }
 }
